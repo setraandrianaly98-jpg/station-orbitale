@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Orbitale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="space-glow"></div>
+    <div class="planet"></div>
+
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">
+          <span class="mark-ring"></span>
+          <span class="mark-core">S</span>
+        </div>
+        <div class="brand-copy">
+          <div class="brand-subtitle">STATION ORBITALE DE MONITORING</div>
+        </div>
+      </div>
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span>SYSTÈME OPERATIONNEL</span>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="panel production-panel">
+        <h2>Calculer une production</h2>
+
+        <div class="production-grid">
+          <div class="field">
+            <label>DATE</label>
+            <div class="input-shell date-shell">
+              <input id="productionDate" type="date" value="2026-10-06" />
+              <span class="field-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>NOM DE VENTE</label>
+            <input id="saleName" type="text" value="Cool Club" placeholder="Nom de vente" />
+          </div>
+
+          <div class="field">
+            <label>TYPE DE CODE (OBJECTIF)</label>
+            <select id="protocolType">
+              <option value="FR SIMPLE">FR SIMPLE</option>
+              <option value="FR COMPLEXE">FR COMPLEXE</option>
+              <option value="AL SIMPLE">AL SIMPLE</option>
+              <option value="AL COMPLEXE">AL COMPLEXE</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>NOMBRE TOTAL DE RÉFÉRENCES</label>
+            <input id="totalRefs" type="number" min="1" value="25" />
+          </div>
+
+          <div class="field">
+            <label>HEURE DE DÉBUT</label>
+            <div class="input-shell time-shell">
+              <input id="startTime" type="time" value="11:39" />
+              <span class="field-icon">◔</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>HEURE DE FIN RÉELLE</label>
+            <div class="input-shell time-shell">
+              <input id="endTime" type="time" value="13:19" />
+              <span class="field-icon">◔</span>
+            </div>
+          </div>
+
+          <div class="field checkbox-field">
+            <label>PAUSE</label>
+            <label class="toggle-box">
+              <input id="pauseToggle" type="checkbox" checked />
+              <span>Pause 30 min</span>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>FIN PRÉVUE</label>
+            <div class="input-shell time-shell">
+              <input id="plannedEnd" type="time" value="13:19" />
+              <span class="field-icon">◔</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-strip">
+          <div class="meta-line">
+            <span>RÉFÉRENCES RESTANTES</span>
+            <strong id="remainingRefs">25</strong>
+          </div>
+        </div>
+
+        <div class="summary-box">
+          <span>RÉFÉRENCES RESTANTES — RESTE À FAIRE</span>
+          <strong id="remainingSummary">25 réf</strong>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <label>TEMPS THÉORIQUE</label>
+            <strong id="theoreticalTime">1h 40</strong>
+          </div>
+          <div class="stat-box">
+            <label>TEMPS RÉEL DE PRODUCTION</label>
+            <strong id="realTime">—</strong>
+          </div>
+          <div class="stat-box">
+            <label>PERFORMANCE DE LA VENTE</label>
+            <strong id="performanceValue">—</strong>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-primary" id="calculateBtn">CALCULER</button>
+          <button class="btn btn-success" id="saveProductionBtn">ENREGISTRER LA PRODUCTION</button>
+          <button class="btn btn-reset" id="resetBtn">RÉINITIALISER</button>
+        </div>
+      </section>
+
+      <aside class="panel sales-panel">
+        <div class="panel-header">
+          <h2>Ventes à venir</h2>
+          <button class="tag-btn">PLANIFICATION</button>
+        </div>
+
+        <div id="upcomingSales" class="upcoming-list"></div>
+      </aside>
+
+      <section class="panel history-panel">
+        <div class="history-header">
+          <h2>Historique des productions</h2>
+          <div class="history-tools">
+            <input id="historyFilter" type="text" placeholder="Rechercher une vente" />
+            <span class="calendar-tag">Temps effectif le 06/10/2026 - 4h 03</span>
+          </div>
+        </div>
+
+        <div class="history-summary">
+          <span>Temps 4h 03</span>
+          <span>Références 0</span>
+          <span>Restantes 0</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>VENTE</th>
+                <th>CODE</th>
+                <th>RÉF.</th>
+                <th>TRAITÉES</th>
+                <th>DÉBUT</th>
+                <th>FIN</th>
+                <th>DURÉE</th>
+                <th>RESTE</th>
+                <th>PERFORMANCE</th>
+                <th>STATUT</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+          </table>
+        </div>
+
+        <button class="btn btn-closure" id="closeDayBtn">CLÔTURER LA JOURNÉE</button>
+      </section>
+
+      <section class="panel capacity-panel">
+        <h2>Simulation de capacité</h2>
+
+        <div class="capacity-grid">
+          <div class="field">
+            <label>HEURE DE DÉBUT</label>
+            <div class="input-shell time-shell">
+              <input id="simStart" type="time" value="08:00" />
+              <span class="field-icon">◔</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>HEURE DE FIN</label>
+            <div class="input-shell time-shell">
+              <input id="simEnd" type="time" value="11:30" />
+              <span class="field-icon">◔</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>CODE</label>
+            <select id="simProtocol">
+              <option value="AL SIMPLE">AL SIMPLE</option>
+              <option value="AL COMPLEXE">AL COMPLEXE</option>
+              <option value="FR SIMPLE">FR SIMPLE</option>
+              <option value="FR COMPLEXE">FR COMPLEXE</option>
+            </select>
+          </div>
+
+          <div class="field checkbox-field">
+            <label>PAUSE</label>
+            <label class="toggle-box">
+              <input id="simPause" type="checkbox" checked />
+              <span>Pause 30 min</span>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>RÉFÉRENCES ESTIMÉES</label>
+            <div class="capacity-result" id="simResult">35 réf</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
